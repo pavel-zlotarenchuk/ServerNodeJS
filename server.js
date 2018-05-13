@@ -28,11 +28,11 @@ app.post(baseApi + '/artists/add/:name', artistsController.create)
 app.put(baseApi + '/artists/update/:id/:newName', artistsController.update)
 
 //DELETE
-app.delete(baseApi + '/artists/:id', artistsController.delete)
+app.delete(baseApi + '/artists/delete/:id', artistsController.delete)
 
-db.connect('mongodb://localhost:27017/myapi', function (error){
+db.connect(function (error){
 	if (error){
-		return console.log('error')
+		return console.log(error)
 	}
 
 	app.listen(3012, function (){

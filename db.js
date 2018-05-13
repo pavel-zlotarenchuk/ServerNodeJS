@@ -1,21 +1,23 @@
-var mongoClient = require('mongodb').MongoClient
+var mysql = require('mysql');
 
 var state = {
 	db: null
 }
 
-exports.connect = function (url, done){
+exports.connect = function (done){
 	if (state.db){
 		return done()
 	}
-	mongoClient.connect(url, function(error, client){
-		if (error){
-			return done(error)
-		}
 
-		state.db = client.db('myapi')
+    var connection = mysql.createConnection({
+        host     : 'localhost',
+        port     : '3306',
+        user     : 'root',
+        password : 'qweqwe123123',
+        database : 'myapi'
+    });
+		state.db = connection
 		done()
-	})
 }
 
 exports.get = function (){

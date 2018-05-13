@@ -34,7 +34,7 @@ exports.create = function (req, res){
 }
 
 exports.update = function (req, res){
-	Artists.update(req.params.id, {$set: {name: req.params.newName}}, function (error, result){
+	Artists.update(req.params.id, req.params.newName, function (error, result){
 		if (error){
 			console.log(error)
 			return res.sendStatus(500)
