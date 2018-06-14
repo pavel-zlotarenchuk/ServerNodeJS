@@ -1,7 +1,8 @@
 var Artists = require('../models/artists')
+var tableName = "artists"
 
 exports.all = function (req, res){
-	Artists.all(function (error, docs){
+	Artists.all(tableName, function (error, docs){
 		if (error){
 			console.log(error)
 			return res.sendStatus(500)
@@ -11,7 +12,7 @@ exports.all = function (req, res){
 }
 
 exports.findById = function (req, res){
-	Artists.findById(req.params.id, function (error, doc){
+	Artists.findById(tableName, req.params.id, function (error, doc){
 		if (error){
 			console.log(error)
 			return res.sendStatus(500)
@@ -24,7 +25,7 @@ exports.create = function (req, res){
 	var artist = {
 		name: req.params.name
 	}
-	Artists.create(artist, function (error, result){
+	Artists.create(tableName, artist, function (error, result){
 		if (error){
 			console.log(error)
 			return res.sendStatus(500)
@@ -34,7 +35,7 @@ exports.create = function (req, res){
 }
 
 exports.update = function (req, res){
-	Artists.update(req.params.id, req.params.newName, function (error, result){
+	Artists.update(tableName, req.params.id, req.params.newName, function (error, result){
 		if (error){
 			console.log(error)
 			return res.sendStatus(500)
@@ -44,7 +45,7 @@ exports.update = function (req, res){
 }
 
 exports.delete = function (req, res){
-	Artists.delete(req.params.id, function (error, result){
+	Artists.delete(tableName, req.params.id, function (error, result){
 		if (error){
 			console.log(error)
 			return res.sendStatus(500)
