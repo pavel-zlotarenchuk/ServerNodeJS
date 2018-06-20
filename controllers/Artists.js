@@ -1,8 +1,7 @@
-var Artists = require('../models/artists')
-var tableName = "artists"
+var Artists = require('../db/MySqlDBHelper')
 
-exports.all = function (req, res){
-	Artists.all(tableName, function (error, docs){
+exports.getAll = function (req, res){
+	Artists.getAll(req.params.table, function (error, docs){
 		if (error){
 			console.log(error)
 			return res.sendStatus(500)
@@ -12,7 +11,7 @@ exports.all = function (req, res){
 }
 
 exports.findById = function (req, res){
-	Artists.findById(tableName, req.params.id, function (error, doc){
+	Artists.findById(req.params.table, req.params.id, function (error, doc){
 		if (error){
 			console.log(error)
 			return res.sendStatus(500)
@@ -25,7 +24,7 @@ exports.create = function (req, res){
 	var artist = {
 		name: req.params.name
 	}
-	Artists.create(tableName, artist, function (error, result){
+	Artists.create(req.params.table, artist, function (error, result){
 		if (error){
 			console.log(error)
 			return res.sendStatus(500)
@@ -35,7 +34,10 @@ exports.create = function (req, res){
 }
 
 exports.update = function (req, res){
-	Artists.update(tableName, req.params.id, req.params.newName, function (error, result){
+    var artist = {
+        name: req.params.newName
+    }
+	Artists.update(req.params.table, req.params.id, artist, function (error, result){
 		if (error){
 			console.log(error)
 			return res.sendStatus(500)
@@ -45,7 +47,7 @@ exports.update = function (req, res){
 }
 
 exports.delete = function (req, res){
-	Artists.delete(tableName, req.params.id, function (error, result){
+	Artists.delete(req.params.table, req.params.id, function (error, result){
 		if (error){
 			console.log(error)
 			return res.sendStatus(500)

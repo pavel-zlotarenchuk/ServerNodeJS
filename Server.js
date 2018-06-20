@@ -1,41 +1,41 @@
 var express = require('express')
 var bodyParser = require('body-parser')
-var mongoClient = require('mongodb').MongoClient
-var objectId = require('mongodb').ObjectID
 
 var app = express();
-var db = require('./db')
-var artistsController = require('./controllers/artists')
+var db = require('./db/MySqlDbConfig')
+var artistsController = require('./controllers/Artists')
+
+const port = 3012
 
 var baseApi = "/api"
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}))
 
-//GET
 app.get(baseApi + '/', function (req, res) {
 	res.send('Hello node.js');
 })
 
-app.get(baseApi + '/artists', artistsController.all)
+//GET
+app.get(baseApi + '/:table', artistsController.getAll)
 
-app.get(baseApi + '/artists/:id', artistsController.findById)
+app.get(baseApi + '/:table/:id', artistsController.findById)
 
 //POST
-app.post(baseApi + '/artists/add/:name', artistsController.create)
+app.post(baseApi + '/:table/add/:name', artistsController.create)
 
 //PUT
-app.put(baseApi + '/artists/update/:id/:newName', artistsController.update)
+app.put(baseApi + '/:table/update/:id/:newName', artistsController.update)
 
 //DELETE
-app.delete(baseApi + '/artists/delete/:id', artistsController.delete)
+app.delete(baseApi + '/:table/delete/:id', artistsController.delete)
 
 db.connect(function (error){
 	if (error){
 		return console.log(error)
 	}
 
-	app.listen(3012, function (){
-		console.log('API app started');
+	app.listen(port, function (){
+		console.log('API app started on %s', port);
 	})
 })

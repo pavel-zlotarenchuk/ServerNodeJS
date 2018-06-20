@@ -1,6 +1,6 @@
-var db = require('../MySqlDbConfig')
+var db = require('./MySqlDbConfig')
 
-exports.all = function (table, cb){
+exports.getAll = function (table, cb){
     var sql = 'SELECT * FROM ' + table
     console.log(sql)
     db.get().query(sql, function(error, result, fields){
